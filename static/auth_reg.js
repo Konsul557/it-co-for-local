@@ -1,3 +1,4 @@
+console.log('Start script auth_reg')
 var auth = document.getElementById('auth_btn')
 var reg = document.getElementById('reg_btn')
 var sign_in = document.getElementById('sign_in')
@@ -30,22 +31,14 @@ reg.onclick = function() {
     return false;
 }
 
-var currentMode = 'sign-up';
-sign_up.addEventListener('click', function() {
-    var currentMode = 'sign-up';
-});
 sign_up.addEventListener('click', function(event) {
     event.preventDefault();
 
     var formData = new FormData(document.forms.reg);
-
-    var urlSignUp = 'auth.php';
+    console.log(formData.get('email'));
+    var urlSignUp = '../api/sendmail.php';
     var xhr = new XMLHttpRequest();
-
-    if (currentMode === 'sign-up') {
-        xhr.open("POST", urlSignUp);
-    }
-
+    xhr.open("POST", urlSignUp);
     xhr.send(formData);
 
 
@@ -53,5 +46,7 @@ sign_up.addEventListener('click', function(event) {
         console.log(xhr.response);
         document.cookie = (xhr.response);
     };
-    document.location.href = "auth.php";
+    if (formData.get('email') == '') {
+        alert('Введите Email')
+    }
 });

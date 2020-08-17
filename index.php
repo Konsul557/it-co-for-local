@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,9 +49,27 @@
                             <li class="nav-intem ">
                                 <a href="#contact " class="nav-link waves-effect waves-light " id="a_nav">Contact</a>
                             </li>
-                            <li class="nav-intem ">
+                            <?php 
+                            require 'api/conn.php';
+                            $email_ar = [];
+                            $email = $_SESSION['email'];
+                            if ($_SESSION['email'] != '') {
+                                echo $_SESSION['email'];
+                            }
+                            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                                array_push($email_ar, $row['email']);  
+                            }
+                            if ($email != null) {
+                                echo '<li class="nav-intem ">
+                                <a href="api/exit.php" id="reg">Выйти</a>
+                                </li>';
+                                
+                            } else {
+                                echo '<li class="nav-intem ">
                                 <a href="auth_reg.html" id="reg">SignIn SignUp</a>
-                            </li>
+                                </li>';
+                            }
+                            ?>
                         </ul>
 
 
